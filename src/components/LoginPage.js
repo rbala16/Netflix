@@ -4,6 +4,8 @@ import { LOGIN_BACK_IMG } from "../utils/constants";
 import { createUserWithEmailAndPassword,signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../utils/firebase";
 import { checkFullNameValid, checkValidCredentials } from "../utils/validate";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
   const [isSignInForm, setIsSetInForm] = useState(true);
@@ -13,6 +15,8 @@ const LoginPage = () => {
   const fullName = useRef(null);
   const email = useRef(null);
   const password = useRef(null);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const toggleSignInForm = () => {
     setIsSetInForm(!isSignInForm);
@@ -55,6 +59,7 @@ const signInUser = async () => {
       email.current.value,
       password.current.value);
     console.log("User logged in:", userCredential.user);
+    navigate("/browse")
   } catch (error) {
     console.error("Error logging in:", error.message);
   }
