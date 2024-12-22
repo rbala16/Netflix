@@ -1,16 +1,36 @@
 import React from 'react'
 import { LOGO_IMG } from '../utils/constants'
 import { useDispatch, useSelector } from 'react-redux'
+import { auth } from '../utils/firebase';
+import { useNavigate } from 'react-router-dom';
+import { signOut } from 'firebase/auth';
+import { removeUser } from '../features/userSlice';
 
 const Header = () => {
-  // const user = useSelector((store) => store.user)
-  // const dispatch = useDispatch();
-  
+  const user = useSelector((store) => store.user)
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleSignOut = () => {
+    signOut(auth).then(() => {
+        // Sign-out successful.
+        dispatch(removeUser())
+        navigate("/")
+    }).catch((error) => {
+        // An error happened.
+        navigate("/error")
+    });
+}
   return (
     <div className='absolute px-14 py-2 bg-gradient-to-b from-black z-10 '>
             <img className='w-44' src={LOGO_IMG}
                 alt="logo"
             />
+             {user && <div className='flex p-2'>
+                <img className='w-12 h-12 m-2' src={user.photoURL} alt='User-Avtar' />
+                <button className='font-bold text-white' onClick={handleSignOut}>Sign Out</button>
+            </div>}
+
         </div>
   )
 }

@@ -1,11 +1,12 @@
 import React, { useRef, useState } from "react";
 import Header from "./Header";
-import { LOGIN_BACK_IMG } from "../utils/constants";
-import { createUserWithEmailAndPassword,signInWithEmailAndPassword } from "firebase/auth";
+import { LOGIN_BACK_IMG, USER_AVATAR } from "../utils/constants";
+import { createUserWithEmailAndPassword,signInWithEmailAndPassword,updateProfile } from "firebase/auth";
 import { auth } from "../utils/firebase";
 import { checkFullNameValid, checkValidCredentials } from "../utils/validate";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { addUser } from "../features/userSlice";
 
 const LoginPage = () => {
   const [isSignInForm, setIsSetInForm] = useState(true);
@@ -46,7 +47,29 @@ const LoginPage = () => {
         email.current.value,
         password.current.value
       );
-      console.log("Successfully signed up:", userCredential.user);
+      const user = userCredential.user;
+      console.log("Successfully signed up:", user);
+      
+      updateProfile(user, {
+        displayName: fullName.current.value, photoURL: USER_AVATAR
+    }).then(() => {
+        // Profile updated!
+        console.log('updated profile')
+        const { uid, email, displayName, photoURL } = auth.currentUser
+        dispatch(
+            addUser({
+                uid: uid,
+                email: email,
+                displayName: displayName,
+                photoURL: photoURL
+            })
+        )
+        // ...
+    }).catch((error) => {
+        // An error occurred
+        // ...
+        setErrorInCredMessage(error.message)
+    });
     } catch (error) {
       setErrorInCredMessage(error.message);
     }
