@@ -1,7 +1,11 @@
 import React, { useRef, useState } from "react";
 import Header from "./Header";
 import { LOGIN_BACK_IMG, USER_AVATAR } from "../utils/constants";
-import { createUserWithEmailAndPassword,signInWithEmailAndPassword,updateProfile } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  updateProfile,
+} from "firebase/auth";
 import { auth } from "../utils/firebase";
 import { checkFullNameValid, checkValidCredentials } from "../utils/validate";
 import { useDispatch } from "react-redux";
@@ -49,54 +53,60 @@ const LoginPage = () => {
       );
       const user = userCredential.user;
       console.log("Successfully signed up:", user);
-      
-      updateProfile(user, {
-        displayName: fullName.current.value, photoURL: USER_AVATAR
-    }).then(() => {
-        // Profile updated!
-        console.log('updated profile')
-        const { uid, email, displayName, photoURL } = auth.currentUser
-        dispatch(
-            addUser({
-                uid: uid,
-                email: email,
-                displayName: displayName,
-                photoURL: photoURL
-            })
-        )
-        // ...
-    }).catch((error) => {
-        // An error occurred
-        // ...
-        setErrorInCredMessage(error.message)
-    });
+      //Update profile
+      await updateProfile(user, {
+        displayName: fullName.current.value,
+        photoURL: USER_AVATAR,
+      });
+      // Profile updated!
+      console.log("Profile updated successfully");
+      // Destructure the updated user information
+      const { uid, email: userEmail, displayName, photoURL } = auth.currentUser;
+      dispatch(
+        addUser({
+          uid: uid,
+          email: userEmail,
+          displayName: displayName,
+          photoURL: photoURL,
+        })
+      );
+      navigate("/browse");
     } catch (error) {
+      console.error("Error signing up or updating profile:", error.message);
       setErrorInCredMessage(error.message);
     }
   };
 
-//singin
-const signInUser = async () => {
-  try {
-    const userCredential = await signInWithEmailAndPassword( auth,
-      email.current.value,
-      password.current.value);
-    console.log("User logged in:", userCredential.user);
-    navigate("/browse")
-  } catch (error) {
-    console.error("Error logging in:", error.message);
-  }
-};
+  //singin
+  const signInUser = async () => {
+    try {
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email.current.value,
+        password.current.value
+      );
+      console.log("User logged in:", userCredential.user);
+
+      navigate("/browse");
+    } catch (error) {
+      console.error("Error logging in:", error.message);
+      setErrorInCredMessage(error.message);
+    }
+  };
   const handleButtonClick = () => {
-       // Validate inputs and update error states
+    // Validate inputs and update error states
     const { credError, nameError } = validateInputs();
-// Prevent submission if validation fails
-    if (credError || nameError) return;
- // Determine whether to sign up or sign in
+    // Prevent submission if validation fails
+    if (credError || nameError) {
+      setErrorInCredMessage(credError);
+      setErrorInNameMessage(nameError);
+      return;
+    }
+    // Determine whether to sign up or sign in
     if (!isSignInForm) {
       signUpUser();
     } else {
-      signInUser()
+      signInUser();
     }
   };
 
@@ -111,7 +121,6 @@ const signInUser = async () => {
         className="w-4/12 p-12 my-36 mx-auto absolute right-0 left-0 text-gray-300 rounded-lg bg-black bg-opacity-80"
       >
         <h1 className="font-bold text-3xl py-4 text-white">
-          {" "}
           {isSignInForm ? "Sign In" : "Sign Up"}
         </h1>
         {!isSignInForm && (
@@ -135,7 +144,10 @@ const signInUser = async () => {
           className="p-4 m-4 w-full bg-black border-gray-300 rounded"
         />
         <p className="text-red-700 font-bold py-2 m-4">
-          {errorInCredMessage} {!isSignInForm && errorInNameMessage}
+          {errorInCredMessage && <span>{errorInCredMessage}</span>}
+          {!isSignInForm && errorInNameMessage && (
+            <span>{errorInNameMessage}</span>
+          )}
         </p>
         <button
           className="p-4 m-4 w-full rounded bg-red-700"
