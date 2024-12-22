@@ -85,8 +85,17 @@ const LoginPage = () => {
         email.current.value,
         password.current.value
       );
-      console.log("User logged in:", userCredential.user);
-
+      const user = userCredential.user;
+      console.log("User logged in:",user);
+      const { uid, email: userEmail, displayName, photoURL } = user
+      dispatch(
+          addUser({
+            uid: uid,
+            email: userEmail,
+            displayName: displayName,
+            photoURL: photoURL,
+          })
+      )
       navigate("/browse");
     } catch (error) {
       console.error("Error logging in:", error.message);
