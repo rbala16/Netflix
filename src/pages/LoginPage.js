@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import Header from "./Header";
+import Header from "../components/Header";
 import { LOGIN_BACK_IMG, USER_AVATAR } from "../utils/constants";
 import {
   createUserWithEmailAndPassword,
@@ -86,16 +86,16 @@ const LoginPage = () => {
         password.current.value
       );
       const user = userCredential.user;
-      console.log("User logged in:",user);
-      const { uid, email: userEmail, displayName, photoURL } = user
+      console.log("User logged in:", user);
+      const { uid, email: userEmail, displayName, photoURL } = user;
       dispatch(
-          addUser({
-            uid: uid,
-            email: userEmail,
-            displayName: displayName,
-            photoURL: photoURL,
-          })
-      )
+        addUser({
+          uid: uid,
+          email: userEmail,
+          displayName: displayName,
+          photoURL: photoURL,
+        })
+      );
       navigate("/browse");
     } catch (error) {
       console.error("Error logging in:", error.message);
