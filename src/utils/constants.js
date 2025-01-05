@@ -8,4 +8,12 @@ export const API_OPTIONS = {
       Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI1ODNlMzE1ZjY0MGZlYjU1NjgxNDg5YjA0ZDQ5M2Q3MSIsIm5iZiI6MTczNDg1NDA4OS4yMjUsInN1YiI6IjY3NjdjNWM5OGU5ZDljY2RlYjkxMGZlZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.OykycaIR2OQxV-D-1TRHosmLpc6U-OJCVOOIJK0a3Ew'
     }
 }
+
+//Movies
 export const MOVIE_IMG_URL = "https://image.tmdb.org/t/p/w400/";
+export const NOWPLAYING_MOVIES_URL = "https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1";
+export const POPULAR_MOVIE_URL = "https://api.themoviedb.org/3/movie/popular?language=en-US&page=1";
+export const UPCOMING_MOVIE_URL = "https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1";
+
+//TV Shows
+export const TOP_RATED_TVSHOWS = "https://api.themoviedb.org/3/tv/top_rated?language=en-US&page=1";

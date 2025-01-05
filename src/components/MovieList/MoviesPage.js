@@ -2,20 +2,25 @@ import React from 'react'
 import MovieList from './MovieList';
 import { useSelector } from 'react-redux';
 
+
 const MoviesPage = () => {
     const movies = useSelector((store)=>store.movies);
-    console.log("movies",movies);
+    const tvShows = useSelector((store)=>store.tvShows);
+
+    // console.log("movies",movies);
     // console.log("nowPlayingmovies",movies.nowPlayingMovies);
        // Fallback for undefined nowPlayingMovies
-    if(!movies?.nowPlayingMovies) {
-      return<p>Loading movies...</p>
+       if (!movies.nowPlayingMovies && !movies.popularMovies && !movies.upcomingMovies && !tvShows.topRatedTvShows) {
+        return <p>Loading movies...</p>;
     }
 
   return (
     
-    (<div className='p-7'>
-        <MovieList title="Now Playing" movies={movies.nowPlayingMovies}/>
-      
+    (<div>
+ {movies.upcomingMovies && <MovieList title="Upcoming Movies" movies={movies.upcomingMovies} />}
+            {movies.popularMovies && <MovieList title="Popular Movies" movies={movies.popularMovies} />}
+            {movies.nowPlayingMovies && <MovieList title="Now Playing" movies={movies.nowPlayingMovies} />}
+            {tvShows.topRatedTvShows && <MovieList title="Top Rated TV Shows" movies={tvShows.topRatedTvShows} />}        
     </div>)
   )
 }
