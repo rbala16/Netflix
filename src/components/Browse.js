@@ -3,6 +3,7 @@ import Header from './Header'
 // import MainContainer from './MainContainer'
 import useNowPlayingMovies from '../hooks/useNowPlayingMovies'
 import HeroSection from './HeroSection/HeroSection'
+import MoviesPage from './MovieList/MoviesPage'
 
 const Browse = () => {
   useNowPlayingMovies()
@@ -10,6 +11,7 @@ const Browse = () => {
     <div>
       <Header/>
       <HeroSection/>
+      <MoviesPage/>
     </div>
   )
 }

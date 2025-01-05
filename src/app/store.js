@@ -5,7 +5,7 @@ import heroSlice from "../features/heroSlice";
 const appStore = configureStore({
     reducer: {
         user: userSlice,
-        movie:movieSlice,
+        movies:movieSlice,
         hero:heroSlice,
     }
 })

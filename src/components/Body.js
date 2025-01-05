@@ -1,7 +1,7 @@
 import React from 'react'
 import { createBrowserRouter,RouterProvider } from 'react-router-dom'
 import Browse from './Browse'
-import LoginPage from './LoginPage'
+import LoginPage from '../pages/LoginPage'
 
 const Body = () => {
     
