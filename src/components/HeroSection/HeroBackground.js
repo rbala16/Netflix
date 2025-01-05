@@ -5,7 +5,7 @@ import useHeroTrailer from "../../hooks/useHeroTrailer";
 const HeroBackground = ({ movieId }) => {
   useHeroTrailer(movieId);
   const heroTrailerVideo = useSelector((store) => store.hero?.trailerVideo);
-  console.log("Hero Trailer Video:", heroTrailerVideo);
+  // console.log("Hero Trailer Video:", heroTrailerVideo);
 
   if (!heroTrailerVideo) {
     return <p>Loading trailer...</p>;

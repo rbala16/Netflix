@@ -1,8 +1,11 @@
 import React from "react";
 import MovieCard from "./MovieCard";
 import Slider from "react-slick";
+import { useNavigate } from "react-router-dom";
 
 const MovieList = ({ title, movies }) => {
+  const navigate = useNavigate();
+
   const settings = {
    infinite: true,
     speed: 100,
@@ -27,7 +30,9 @@ const MovieList = ({ title, movies }) => {
    
   };
   
-
+  const handleMovieClick = (movieId) => {
+     navigate(`/movie/${movieId}`);
+  };
   return (
     <div className="px-6 py-8 bg-black">
       <div>
@@ -37,7 +42,7 @@ const MovieList = ({ title, movies }) => {
         {/* Movie Slider */}
         <Slider {...settings}>
           {movies?.map((movie) => (
-            <div key={movie.id} className="flex justify-center">
+            <div key={movie.id} className="flex justify-center" onClick={() => handleMovieClick(movie.id)}>
               <MovieCard posterPath={movie.poster_path} />
             </div>
           ))}
