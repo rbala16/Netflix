@@ -3,6 +3,7 @@ import userSlice from "../features/userSlice";
 import movieSlice from "../features/movieSlice";
 import heroSlice from "../features/heroSlice";
 import tvShowsSlice from "../features/tvShowsSlice";
+import gptSlice from "../features/gptSlice";
 
 const appStore = configureStore({
     reducer: {
@@ -10,6 +11,7 @@ const appStore = configureStore({
         movies:movieSlice,
         hero:heroSlice,
         tvShows:tvShowsSlice,
+        gpt:gptSlice,
     }
 })
 

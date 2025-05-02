@@ -6,8 +6,16 @@ module.exports = {
     './src/**/*.css',  // For any CSS files inside src folder
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        bodyColor: "#212428",
+        lightText: "#c4cfde",
+    },
+    fontFamily:{
+      bodyFont:["Poppins","sans-serif"],
+      titleFont:["Montserrat","sans-serif"],
+    },
   },
+},
   plugins: [],
 }
-

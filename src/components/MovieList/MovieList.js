@@ -7,7 +7,7 @@ const MovieList = ({ title, movies }) => {
   const navigate = useNavigate();
 
   const settings = {
-   infinite: true,
+    infinite: true,
     speed: 100,
     slidesToShow: 5,
     slidesToScroll: 3,
@@ -27,11 +27,10 @@ const MovieList = ({ title, movies }) => {
         },
       },
     ],
-   
   };
-  
-  const handleMovieClick = (movieId) => {
-     navigate(`/movie/${movieId}`);
+
+  const handleMovieClick = (movie) => {
+    navigate(`/movie/${movie.id}`, { state: { title: movie.title , overview:movie.overview,releaseDate:movie.release_date,language:movie.original_language } });
   };
   return (
     <div className="px-6 py-8 bg-black">
@@ -42,7 +41,11 @@ const MovieList = ({ title, movies }) => {
         {/* Movie Slider */}
         <Slider {...settings}>
           {movies?.map((movie) => (
-            <div key={movie.id} className="flex justify-center" onClick={() => handleMovieClick(movie.id)}>
+            <div
+              key={movie.id}
+              className="flex justify-center"
+              onClick={() => handleMovieClick(movie)}
+            >
               <MovieCard posterPath={movie.poster_path} />
             </div>
           ))}
